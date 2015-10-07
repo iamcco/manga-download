@@ -53,27 +53,6 @@ def getIndex():
             for one in oneThread:
                 one.join()
 
-def getDown(downPage, downName, mangaName):
-    req = urllib2.Request(mainHost + downPage, headers=headersone)
-    try:
-        downOriginSite = urllib2.urlopen(req).read()
-    except:
-        global failCount
-        failCount += 1
-        print 'download', downName, 'fail'
-        return 0
-    dl = downOriginList.search(downOriginSite)
-    if dl:
-        url = 'http://rtk.um5.cc' + dl.group(1)
-        req = urllib2.Request(url = url + '&sess_id=8b57967d54a881c82d6da1fbf3515222&callback=getData', headers=headerstwo)
-        lists = urllib2.urlopen(req).read()
-        lists = downList.findall(lists)
-        if lists:
-            while True:
-                print 'downloading', downName.decode('utf-8')
-                if getFile(lists[0].replace('\\', ''), downName.decode('utf-8'), mangaName.decode('utf-8')):
-                    break
-
 
 def getFile(url, name, dirName):
     if not os.path.exists(dirName):
